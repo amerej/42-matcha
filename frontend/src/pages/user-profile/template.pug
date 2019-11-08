@@ -1,0 +1,37 @@
+v-container(grid-list-xs fill-height)
+  v-layout(row wrap align-center justify-space-around)
+    v-flex(xs11 sm8 md6 lg6)
+      v-layout(row wrap align-center justify-space-around)
+        v-flex(v-for="(n, i) in 1" :key="i" xs12 sm6 md6 lg6)
+          v-img(:src="user.pictures[i]"
+            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+            aspect-ratio="1"
+            class="grey lighten-2")
+        v-flex(xs12 sm6 md6 lg6)
+          v-layout(row wrap align-center justify-space-around)
+            v-flex(v-for="(n, i) in 5" :key="i" v-if="i >= 1" xs3 sm6 md6 lg6)
+              v-img(:src="user.pictures[i]"
+                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                aspect-ratio="1"
+                class="grey lighten-2")
+      v-card(flat color="transparent")
+        v-card-title(primary-title)
+          div
+            div(class="headline") {{ user.username }}, {{ user.age }}
+            span {{ user.firstname }} {{ user.lastname }}
+        v-card-text
+          p Gender: {{ user.gender }}
+          p Interested in: {{ user.orientation }}
+          p Bio: {{ user.bio }}
+          p Popularity: {{ user.popularity }}
+          p Localization: {{ user.localization }}
+          p Tag: {{ user.tag }}
+          p Is Online: {{ user.is_online }}
+        v-card-actions
+          v-layout(row wrap)
+            v-btn(color="primary" large depressed) Like
+          v-layout(row wrap justify-end)
+            v-btn(color="error" outline depressed) Block
+            v-btn(color="error" depressed) Report
+  v-snackbar(v-model="snack.snackbar" :color="snack.color" :timeout="snack.timeout") {{ snack.text }}
+    v-btn(dark flat @click="snack.snackbar = false") Close

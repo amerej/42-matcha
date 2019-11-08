@@ -1,0 +1,95 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    build:
+      context: ./backend/bin/sql
+      dockerfile: postgres.Dockerfile
+    env_file:
+      - ./env_files/backend/dev/postgres.env
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: bitnami/redis:latest
+    env_file:
+      - ./env_files/backend/dev/redis.env
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/bitnami/redis/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: dev.Dockerfile
+      context: ./nginx
+    ports:
+      - '4000:80'
+
+  backend:
+    build:
+      dockerfile: dev.Dockerfile
+      context: ./backend
+    volumes:
+      - ./backend:/home/node/app
+      - /home/node/app/node_modules
+    env_file:
+      - ./env_files/backend/dev/postgres.env
+      - ./env_files/backend/dev/redis.env
+      - ./env_files/backend/dev/common.env
+    depends_on:
+      - postgres
+      - redis
+      - nginx
+
+  frontend:
+    build:
+      dockerfile: dev.Dockerfile
+      context: ./frontend
+    volumes:
+      - ./frontend:/home/node/app
+      - /home/node/app/node_modules
+    env_file:
+      - ./env_files/frontend/dev/common.env
+    depends_on:
+      - postgres
+      - redis
+      - nginx
+      - backend
+
+  # frontend_test_e2e:
+  #   build:
+  #     dockerfile: cypress.Dockerfile
+  #     context: ./frontend
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./frontend:/app
+  #   command: yarn run test:e2e --headless
+
+  # frontend_test_unit:
+  #   build:
+  #     dockerfile: dev.Dockerfile
+  #     context: ./frontend
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./frontend:/app
+  #   command: yarn run test:unit
+
+volumes:
+  postgres:
+  redis:

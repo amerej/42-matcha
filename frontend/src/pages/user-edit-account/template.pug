@@ -1,0 +1,14 @@
+v-container(fluid fill-height)
+  v-layout(align-center justify-center)
+    v-flex(xs11 sm8 md6 lg6 class="text-xs-center")
+      v-form(v-model="valid")
+        v-text-field(prepend-icon="person" v-model="email" :rules="emailRules" label="Email" required)
+        v-text-field(prepend-icon="person" v-model="username" :rules="usernameRules" label="Username" required)
+        v-text-field(prepend-icon="person" v-model="firstname" :rules="firstnameRules" label="Firstname" required)
+        v-text-field(prepend-icon="person" v-model="lastname" :rules="lastnameRules" label="Lastname" required)
+        v-text-field(prepend-icon="lock" :append-icon="showPassword ? 'visibility_off' : 'visibility'" :type="showPassword ? 'text' : 'password'" v-model="password" :rules="passwordRules" label="Password" @click:append="showPassword = !showPassword")
+      br
+      br
+      v-btn(@click="submit" color="primary" :disabled="!valid" large depressed) Submit
+  v-snackbar(v-model="snackbar" :color="color" :timeout="timeout") {{ text }}
+    v-btn(flat @click="snackbar = false" large depressed) Close

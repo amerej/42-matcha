@@ -1,0 +1,66 @@
+div
+  v-navigation-drawer(v-if="isAuth" disable-resize-watcher fixed temporary v-model="drawer")
+    v-list(class="pt-0")
+      v-subheader Menu
+      template(v-for="(item, index) in items")
+        v-list-tile(router :to="item.link" :key="index")
+          v-list-tile-action
+            v-icon(v-html="item.icon")
+          v-list-tile-content
+            v-list-tile-title(v-html="item.title")
+      v-divider
+      v-subheader Personal
+      v-list-tile(router :to="{ name: 'UserProfile', params: {user_id: userId } }")
+        v-list-tile-action
+          v-icon person
+        v-list-tile-content
+          v-list-tile-title My Profile
+      v-list-tile(router :to="{ name: 'UserEditProfile' }")
+        v-list-tile-action
+          v-icon person
+        v-list-tile-content
+          v-list-tile-title Edit My Profile
+      v-list-tile(router :to="{ name: 'UserEditAccount' }")
+        v-list-tile-action
+          v-icon account_circle
+        v-list-tile-content
+          v-list-tile-title Edit My Account
+      v-divider
+      v-list-tile(router :to="{ name: 'Signout' }")
+        v-list-tile-action
+          v-icon exit_to_app
+        v-list-tile-content
+          v-list-tile-title Signout
+
+  v-toolbar(flat prominent fixed clipped-left app)
+    v-btn(v-if="isAuth" icon @click.stop="drawer = !drawer")
+      v-badge(overlap color="secondary")
+        span(slot="badge") 6
+        v-icon(size="32px") menu
+    v-toolbar-title Matcha
+    //- v-spacer
+    //- v-toolbar-items(v-if="isAuth")
+    //-   v-menu(v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y)
+    //-     v-btn(slot="activator" icon)
+    //-       v-avatar
+    //-         v-img(src="https://randomuser.me/api/portraits/men/1.jpg")
+    //-     v-card
+    //-       v-list(class="pa-0")
+    //-         v-list-tile(avatar)
+    //-           v-list-tile-avatar(@click="signout")
+    //-             v-img(src="https://cdn.vuetifyjs.com/images/john.jpg")
+    //-           v-list-tile-content
+    //-             v-list-tile-title Username
+    //-             v-list-tile-sub-title user@gmail.com
+    //-       v-divider(light)
+    //-       v-list-tile(router :to="{ name: 'UserProfile', params: {id: userId } }")
+    //-           v-list-tile-action
+    //-             v-icon(light) person
+    //-           v-list-tile-content
+    //-             v-list-tile-title Your Profile
+    //-       template(v-for="(item, index) in userItems")
+    //-         v-list-tile(router :to="item.link" :key="index")
+    //-           v-list-tile-action
+    //-             v-icon(light v-html="item.icon")
+    //-           v-list-tile-content
+    //-             v-list-tile-title(v-html="item.title")

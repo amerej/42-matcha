@@ -1,0 +1,18 @@
+v-container(fluid fill-height)
+  v-layout(align-center justify-center)
+    v-flex(xs11 sm8 md6 lg6 class="text-xs-center")
+      h1 Signup
+      br
+      v-form(v-model="form.valid")
+        v-text-field(prepend-icon="person" v-model="user.username" :rules="form.rules.username" label="Username" autocomplete="username" required)
+        v-text-field(prepend-icon="email" v-model="user.email" :rules="form.rules.email" label="E-mail" autocomplete="email" required)
+        v-text-field(prepend-icon="person" v-model="user.firstname" :rules="form.rules.firstname" label="Firstname" autocomplete="given-name" required)
+        v-text-field(prepend-icon="person" v-model="user.lastname" :rules="form.rules.lastname" label="Lastname" autocomplete="family-name" required)
+        v-text-field(prepend-icon="lock" :append-icon="form.showPassword ? 'visibility_off' : 'visibility'" :type="form.showPassword ? 'text' : 'password'"
+          v-model="user.password" :rules="form.rules.password" label="Password" @click:append="form.showPassword = !form.showPassword" autocomplete="current-password" required)
+        br
+        v-btn(@click="submit" :disabled="!form.valid" color="primary" large depressed) Submit
+        br
+        br
+        p(class="d-inline") Already an account ? &nbsp
+        router-link(router to="/signin") Sign in

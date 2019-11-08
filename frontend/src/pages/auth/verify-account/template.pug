@@ -1,0 +1,15 @@
+v-container(fluid fill-height)
+	v-layout(row wrap align-center justify-center)
+		v-flex(v-if="!isVerified" xs12 sm8 md4 class="text-xs-center")
+			h1 Verify
+			br
+			v-form(v-model="form.valid" ref="form")
+				v-text-field(prepend-icon="person" v-model="uuid" :rules="form.rules.uuid" label="Activation code" required)
+				br
+				v-btn(@click="submitCode" :disabled="!form.valid" color="primary" large depressed) Submit
+		v-flex(v-else xs10 sm8 md4 class="text-xs-center")
+			h1 Activation Success
+			br
+			v-btn(round router to="/signin" color="primary" large depressed) Signin
+	v-snackbar(v-model="snack.snackbar" :color="snack.color" :timeout="snack.timeout") {{ snack.text }}
+		v-btn(dark flat @click="snack.snackbar = false") Close

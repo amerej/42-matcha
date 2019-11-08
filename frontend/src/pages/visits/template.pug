@@ -1,0 +1,17 @@
+v-container(fluid)
+  template(v-if="activeComp === 'appUserList'")
+    keep-alive
+      appUserList(:users="users" :showMoreList="showMoreList" :isShowMoreButtonEnabled="isDisabled" :userDetails="userDetails")
+  template(v-if="activeComp === 'appUserListDetails'")
+    br
+    v-icon(large @click="switchComponent('appUserList')") arrow_back
+    br
+    keep-alive
+      appUserListDetails(:user="user")
+//-   v-bottom-sheet(v-model="sheet" class="text-xs-center")
+//-     v-btn(slot="activator" color="#ffb000" dark) Show search
+//-     v-card(tile)
+//-       keep-alive
+//-         appUserSearch
+//- keep-alive
+//-   appUserSearchList

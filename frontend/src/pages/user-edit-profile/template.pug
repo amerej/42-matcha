@@ -1,0 +1,16 @@
+v-container(grid-list-xs fill-height)
+  v-layout(row wrap align-center justify-space-around)
+    v-flex(xs11 sm8 md6 lg6 class="text-xs-center")
+      app-user-edit-profile-pictures
+      br
+      br
+      v-form(v-model="valid")
+        v-select(prepend-icon="person" v-model="form.gender" :items="items.gender" :rules="rules.gender" label="Gender" required)
+        v-select(prepend-icon="person" v-model="form.orientation" :items="items.orientation" label="Orientation" required)
+        v-text-field(prepend-icon="person" v-model="form.age" :rules="rules.age" label="Age" required)
+        v-textarea(prepend-icon="person" v-model="form.bio" name="input-7-1" rows="1" auto-grow value="form.bio" :rules="rules.bio" label="Bio")
+        v-select(prepend-icon="person" v-model="form.tag" :items="items.tag" :rules="rules.tag" label="Tag" required)
+      br
+      v-btn(@click="submit" :disabled="!valid" color="primary" large depressed) Submit
+  v-snackbar(v-model="sn.snackbar" :color="sn.color" :timeout="sn.timeout") {{ sn.text }}
+    v-btn(flat @click="sn.snackbar = false") Close

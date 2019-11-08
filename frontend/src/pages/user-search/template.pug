@@ -1,0 +1,9 @@
+v-container(fluid fill-height)
+  v-icon(class="btn-back" v-if="activeComponent === 'appUserList'" large @click="switchComponent('appNewSearch')") arrow_back
+  v-icon(class="btn-back" v-if="activeComponent === 'appUserProfile'" large @click="switchComponent('appUserList')") arrow_back
+  v-layout(justify-center align-center)
+    v-flex(xs11 sm8 md6 lg6 class="text-xs-center")
+      keep-alive
+        appNewSearch(v-if="activeComponent === 'appNewSearch'" :search.sync="search" :searchSubmit="searchSubmit")
+      appUserList(v-if="activeComponent === 'appUserList'" :users="users" :userDetails="userDetails")
+      appUserProfile(v-if="activeComponent === 'appUserProfile'" :user="user")

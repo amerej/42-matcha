@@ -1,0 +1,8 @@
+div
+  v-subheader(class="pl-0") {{ label }}
+  v-range-slider(
+    v-model="value"
+    @change="onChange"
+    :min="min" :max="max"
+    :thumb-size="24" thumb-label="always"
+  )

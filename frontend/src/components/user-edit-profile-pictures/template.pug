@@ -1,0 +1,34 @@
+//- div
+//-   v-container(grid-list-md fill-height)
+//-     v-layout(row wrap align-center justify-center)
+//-       v-flex(v-for="i in 5" :key="i" xs4 sm4 md4 lg3)
+//-         v-img(:src="pictures[i-1]" aspect-ratio="1")
+//-           v-layout(slot="placeholder" fill-height align-center justify-center ma-0)
+//-             v-progress-circular(indeterminate color="grey lighten-5")
+//-           label
+//-             img(src="@/assets/plus-symbol.svg" class="add-button")
+//-             input(v-bind:id="i-1" type="file" style="display:none" @change="handleFileChange")
+//-   v-snackbar(v-model="snackbar" :color="color" :timeout="timeout") {{ text }}
+//-     v-btn(dark flat @click="snackbar = false") Close
+
+v-layout(row wrap align-center justify-space-around)
+  v-flex(v-for="(n, i) in 1" :key="i" xs12 sm6 md6 lg6)
+    v-img(:src="pictures[i]"
+      :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+      aspect-ratio="1"
+      class="grey lighten-2")
+      label
+        img(src="@/assets/edit.svg" class="add-button")
+        input(v-bind:id="i" type="file" style="display:none" @change="handleFileChange")
+  v-flex(xs12 sm6 md6 lg6)
+    v-layout(row wrap align-center justify-space-around)
+      v-flex(v-for="(n, i) in 5" :key="i" v-if="i >= 1" xs3 sm6 md6 lg6)
+        v-img(:src="pictures[i]"
+          :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+          aspect-ratio="1"
+          class="grey lighten-2")
+          label
+            img(src="@/assets/edit.svg" class="add-button-small")
+            input(v-bind:id="i" type="file" style="display:none" @change="handleFileChange")
+  v-snackbar(v-model="snackbar" :color="color" :timeout="timeout") {{ text }}
+    v-btn(flat @click="snackbar = false") Close

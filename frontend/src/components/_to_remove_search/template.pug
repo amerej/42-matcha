@@ -1,0 +1,19 @@
+v-container(fluid fill-height)
+  v-layout(align-center justify-center)
+    v-flex(xs10 sm8 md6 class="text-xs-center")
+      v-form
+        app-range-slider(label="Age" :model.sync="age" :min="18" :max="99")
+        app-range-slider(label="Popularity" :model.sync="popularity" :min="0" :max="100")
+
+        v-subheader(class="pl-0") Distance
+        v-slider(
+          v-model="distance"
+          :min="0" :max="100"
+          :thumb-size="24" thumb-label="always"
+          always-dirty)
+
+        v-subheader(class="pl-0") Tag
+        v-select(
+          v-model="tag"
+          :items="itemsTag" item-value="text"
+          required)

@@ -1,0 +1,21 @@
+v-form
+  app-range-slider(label="Age" :model.sync="searchQuery.age" :min="18" :max="69")
+  app-range-slider(label="Popularity" :model.sync="searchQuery.popularity" :min="0" :max="100")
+
+  v-subheader(class="pl-0") Distance
+  v-slider(
+    v-model="searchQuery.distance"
+    :min="0" :max="100"
+    :thumb-size="24" thumb-label="always"
+    always-dirty)
+
+  v-subheader(class="pl-0") Tag
+  v-select(
+    v-model="searchQuery.tag"
+    :items="searchQuery.itemsTag" item-value="text"
+    required)
+  br
+  v-btn(
+    @click="searchSubmit"
+    color="primary"
+    round large depressed) Search

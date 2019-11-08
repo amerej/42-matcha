@@ -1,0 +1,19 @@
+v-container(fluid fill-height)
+  v-layout(v-if="signinStatus !== 'loading'" align-center justify-center)
+    v-flex(xs11 sm8 md6 lg4 class="text-xs-center")
+      h1 Signin
+      br
+      v-form(v-model="form.valid" ref="form")
+        v-text-field(prepend-icon="person" v-model="user.username" :rules="form.rules.username" label="Username" autocomplete="username" required)
+        v-text-field(prepend-icon="lock" :append-icon="form.showPassword ? 'visibility_off' : 'visibility'" :type="form.showPassword ? 'text' : 'password'"
+          v-model="user.password" :rules="form.rules.password" label="Password" @click:append="form.showPassword = !form.showPassword" autocomplete="current-password" required)
+        br
+        v-btn(@click="submit" :disabled="!form.valid" color="primary" large depressed) Submit
+      br
+      br
+      p(class="d-inline") Don't have an account ? &nbsp
+      router-link(router to="/signup") Create one today !
+  v-layout(v-else align-center justify-center)
+    v-progress-circular(:size="70" :width="7" color="purple" indeterminate)
+  v-snackbar(v-model="snack.snackbar" :color="snack.color" :timeout="snack.timeout") {{ snack.text }}
+    v-btn(dark flat @click="snack.snackbar = false") Close

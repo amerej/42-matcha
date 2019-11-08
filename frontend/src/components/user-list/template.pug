@@ -1,0 +1,33 @@
+//- v-container(fluid fill-height)
+//-   v-layout(justify-center)
+//-     v-flex(xs10 sm8 md6 lg8 class="text-xs-center")
+//-       v-list(two-line)
+//-         template(v-for="(user, index) in users")
+
+//-           v-divider(:inset="true" :key="index")
+
+//-           v-list-tile(avatar @click="getSelectedUser(user)")
+
+//-             v-list-tile-avatar
+//-               //- v-img(:src="item.pictures[0]")
+
+//-             <v-list-tile-content>
+//-               <v-list-tile-title v-html="user.username"></v-list-tile-title>
+//-               <v-list-tile-sub-title v-html="user.age"></v-list-tile-sub-title>
+//-             </v-list-tile-content>
+//-           </v-list-tile>
+//-         </template>
+//-       </v-list>
+
+div
+  v-list(three-line)
+    template(v-for="(user, index) in users")
+      v-divider(v-if="index > 0" :key="index" :inset="true")
+      v-list-tile(avatar @click="userDetails(user)")
+        v-list-tile-avatar
+          v-img(:src="user.picture" :lazy-src="`https://picsum.photos/10/6?image=${index * 5 + 10}`" aspect-ratio="1" class="grey lighten-2")
+        v-list-tile-content
+          v-list-tile-title(v-html="user.username")
+          v-list-tile-sub-title(v-html="user.firstname")
+  br
+  v-btn(color="success" outline depressed @click="showMoreList" :disabled="isShowMoreButtonEnabled") Show More
